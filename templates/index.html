@@ -1,0 +1,20 @@
+{% extends "base.html" %} 
+ 
+{% block content %} 
+ 
+<div class="container"> 
+ 
+    <p style="color: white;">Welcome to The Game Review Database </p> 
+ 
+</div> 
+
+<div id="debug-container"></div>
+
+<script src="{{ url_for('static', filename='js/reviews.js') }}"></script>
+
+<script>
+    // Manually trigger it immediately to test
+    loadReviews(1); 
+</script>
+ 
+{% endblock %}

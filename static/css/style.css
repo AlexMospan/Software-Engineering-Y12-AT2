@@ -1,0 +1,167 @@
+/* @import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap"); 
+ 
+* { 
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box; 
+} 
+ 
+body { 
+    background: #1b1b20; 
+    font-family: "Nunito", sans-serif; 
+    font-size: 1rem; 
+} 
+ 
+main { 
+    max-width: 900px; 
+    margin: auto; 
+    padding: 1rem; 
+    line-height: 1.5; 
+} 
+ 
+.banner { 
+    padding: 60px; 
+    text-align: center; 
+    background: #2A475E; 
+    color: rgb(255, 255, 255); 
+    font-size: 3em; 
+} 
+ 
+nav { 
+    overflow: hidden; 
+    background-color: #1b1b20; 
+    text-align: center;  
+} 
+ 
+nav a { 
+    display: inline-block; 
+    color: #f2f2f2; 
+ 
+    padding: 14px 16px; 
+    text-decoration: none; 
+    font-size: 1.2em; 
+} 
+ 
+nav a:hover { 
+    background-color: #2A475E; 
+    color: white; 
+} 
+ 
+nav a.active { 
+    background-color: #2A475E; 
+    color: white; 
+} 
+ 
+.container { 
+ 
+} 
+  */
+/* --- STEAM REVIEW STYLES --- */
+
+:root {
+    --steam-dark-blue: #1b2838;
+    --steam-blue-grey: #acb2b8;
+    --steam-light-blue: #66c0f4;
+    --steam-header-bg: rgba(0, 0, 0, 0.2);
+    --steam-card-bg: rgba(0, 0, 0, 0.3);
+    --steam-border: #2a475e;
+    --steam-text-white: #ffffff;
+    --steam-text-grey: #8091a2;
+}
+
+/* This targets the container where your JS injects the HTML */
+#debug-container {
+    background-color: var(--steam-dark-blue);
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.steam-review-card {
+    display: flex;
+    background-color: var(--steam-card-bg);
+    margin-bottom: 20px;
+    padding: 0;
+    min-height: 120px;
+    border-radius: 3px;
+}
+
+/* Left Column: Author Info */
+.author-column {
+    width: 160px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-right: 1px solid var(--steam-border);
+    flex-shrink: 0;
+}
+
+.author-name {
+    color: var(--steam-light-blue);
+    font-weight: bold;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.hours-played {
+    color: var(--steam-text-grey);
+    font-size: 11px;
+}
+
+/* Right Column: Review Content */
+.content-column {
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rating-header {
+    display: flex;
+    align-items: center;
+    background: var(--steam-header-bg);
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.thumb {
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.rating-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.status {
+    color: var(--steam-text-white);
+    font-size: 15px;
+}
+
+.playtime-at-review {
+    font-size: 11px;
+    color: var(--steam-text-grey);
+}
+
+.posted-date {
+    font-size: 11px;
+    color: var(--steam-text-grey);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.review-text {
+    color: var(--steam-blue-grey);
+    font-size: 13px;
+    line-height: 1.5;
+    flex-grow: 1;
+    white-space: pre-wrap; /* Keeps the line breaks from your DB */
+}
+
+.review-footer {
+    margin-top: 15px;
+    padding-top: 8px;
+    border-top: 1px solid var(--steam-border);
+    font-size: 11px;
+    color: #626366;
+}
