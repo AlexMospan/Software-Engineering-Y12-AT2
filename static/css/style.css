@@ -165,3 +165,108 @@ nav a.active {
     font-size: 11px;
     color: #626366;
 }
+
+#game-header-container {
+    margin-bottom: 30px;
+    background: #1b2838;
+    border-bottom: 2px solid #2a475e;
+}
+
+#game-info-card {
+    padding: 40px 20px;
+    background: linear-gradient(90deg, rgba(42, 71, 94, 0.8) 0%, rgba(27, 40, 56, 0) 100%);
+    display: flex;
+    align-items: center;
+}
+
+#game-title {
+    color: white;
+    font-size: 36px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.game-stats {
+    color: #66c0f4;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#debug-container {
+    max-width: 940px; /* Standard Steam Content Width */
+    margin: 0 auto;   /* Centers the feed on the page */
+    padding: 20px;
+}
+
+#game-header-container {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    background: linear-gradient(to bottom, #1b2838, #17202d);
+    border-bottom: 1px solid #2a475e;
+}
+
+/* Star Container Styling */
+.star-container {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-right: 15px;
+    border: 1px solid #2a475e;
+    display: flex;
+    align-items: center;
+}
+
+.gold-stars {
+    color: #ffcc00; /* Classic Gold */
+    font-size: 22px;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+}
+
+.empty-stars {
+    color: #444; /* Faded Grey */
+    font-size: 22px;
+    opacity: 0.6;
+}
+
+/* Update the status text to match the "Score" vibe */
+.status {
+    color: #66c0f4;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.game-selector-container {
+    margin-bottom: 15px;
+}
+
+.game-selector-container label {
+    color: #66c0f4;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-right: 10px;
+}
+
+#game-selector {
+    background-color: #101822;
+    color: #dfe3e6;
+    border: 1px solid #2a475e;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+}
+
+#game-selector:hover {
+    border-color: #66c0f4;
+}
+
+#game-selector option {
+    background-color: #1b2838;
+    color: white;
+}

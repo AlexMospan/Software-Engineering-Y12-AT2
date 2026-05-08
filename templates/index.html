@@ -8,6 +8,24 @@
  
 </div> 
 
+<div id="game-header-container">
+    <div id="game-info-card">
+        <div class="game-details">
+            <div class="game-selector-container">
+                <label for="game-selector">CHOOSE GAME:</label>
+                <select id="game-selector">
+                    <option value="1">Elden Ring</option>
+                    <option value="2">Cyberpunk 2077</option>
+                </select>
+            </div>
+            <h1 id="game-title">Select a Game</h1>
+            <div class="stats-bar">
+                <span id="review-count">0 Reviews</span>
+                <span id="overall-rating">| No Rating</span>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="debug-container"></div>
 
 <script src="{{ url_for('static', filename='js/reviews.js') }}"></script>
