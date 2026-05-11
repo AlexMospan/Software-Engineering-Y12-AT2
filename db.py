@@ -1,4 +1,5 @@
 import sqlite3
+from flask import g
 
 def get_reviews_from_db(game_id):
     conn = sqlite3.connect('.database/GameReviews.db')
@@ -17,14 +18,9 @@ def get_reviews_from_db(game_id):
     conn.close()
     return [dict(row) for row in rows]
 
-def get_game_details(game_id):
-    conn = sqlite3.connect('.database/GameReviews.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    
-    # Assuming your GAMES table has a column named 'title' or 'name'
-    cursor.execute("SELECT * FROM GAMES WHERE id = ?", (game_id,))
-    game = cursor.fetchone()
-    
-    conn.close()
-    return dict(game) if game else None
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect('.database/GameReviews.db')
+        db.row_factory = sqlite3.Row  # This lets us access columns by name (like row['title'])
+    return db

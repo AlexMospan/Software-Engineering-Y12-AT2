@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
-import db 
+import db
+import traceback
  
 app = Flask(__name__) 
 
@@ -41,5 +42,30 @@ def get_game_info(game_id):
             "average": avg_rating
         })
     return jsonify({"error": "Game not found"}), 404
+
+@app.route('/api/search-games')
+def search_games():
+    query = request.args.get('q', '').strip()
+    
+    try:
+        # NOTICE THE "db." PREFIX HERE:
+        database_connection = db.get_db() 
+        cursor = database_connection.cursor()
+
+        if not query:
+            cursor.execute("SELECT id, title FROM games LIMIT 10")
+        else:
+            cursor.execute(
+                "SELECT id, title FROM games WHERE title LIKE ? LIMIT 10", 
+                (f"%{query}%",)
+            )
+
+        rows = cursor.fetchall()
+        output = [{"id": row["id"], "title": row["title"]} for row in rows]
+        return jsonify(output)
+
+    except Exception as e:
+        print("DATABASE ERROR:", str(e))
+        return jsonify({"error": str(e)}), 500
  
 app.run(debug=True, port=5000)

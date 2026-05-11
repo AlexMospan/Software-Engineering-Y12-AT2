@@ -1,23 +1,43 @@
 {% extends "base.html" %} 
- 
+
 {% block content %} 
- 
+
 <div class="container"> 
- 
     <p style="color: white;">Welcome to The Game Review Database </p> 
- 
 </div> 
 
 <div id="game-header-container">
     <div id="game-info-card">
         <div class="game-details">
-            <div class="game-selector-container">
-                <label for="game-selector">CHOOSE GAME:</label>
-                <select id="game-selector">
-                    <option value="1">Elden Ring</option>
-                    <option value="2">Cyberpunk 2077</option>
-                </select>
+            <div class="controls-row">
+                <div class="game-selector-container">
+                    <label for="game-selector"></label>
+                    <div class="choose-game-wrapper">
+                        <label class="choose-game-label" for="game-search">CHOOSE GAME:</label>
+                        <div class="search-container">
+                            <input 
+                                type="text" 
+                                id="game-search" 
+                                placeholder="Select a game..." 
+                                autocomplete="off"
+                                value="Elden Ring" 
+                            >
+                            <span class="dropdown-arrow">▼</span>
+                            <div id="search-results-dropdown" class="steam-dropdown"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sort-selector-container">
+                    <label for="sort-selector">SORT BY:</label>
+                    <select id="sort-selector">
+                        <option value="newest">Newest First</option>
+                        <option value="highest">Highest Rating</option>
+                        <option value="lowest">Lowest Rating</option>
+                    </select>
+                </div>
             </div>
+
             <h1 id="game-title">Select a Game</h1>
             <div class="stats-bar">
                 <span id="review-count">0 Reviews</span>
@@ -26,13 +46,9 @@
         </div>
     </div>
 </div>
+
 <div id="debug-container"></div>
 
 <script src="{{ url_for('static', filename='js/reviews.js') }}"></script>
 
-<script>
-    // Manually trigger it immediately to test
-    loadReviews(1); 
-</script>
- 
 {% endblock %}

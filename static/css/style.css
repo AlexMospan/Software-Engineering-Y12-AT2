@@ -1,4 +1,4 @@
-/* @import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap"); 
+ @import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap"); 
  
 * { 
     padding: 0; 
@@ -55,7 +55,7 @@ nav a.active {
 .container { 
  
 } 
-  */
+
 /* --- STEAM REVIEW STYLES --- */
 
 :root {
@@ -269,4 +269,128 @@ nav a.active {
 #game-selector option {
     background-color: #1b2838;
     color: white;
+}
+
+.controls-row {
+    display: flex;
+    gap: 30px; /* Space between the two dropdowns */
+    margin-bottom: 10px;
+}
+
+.sort-selector-container label {
+    color: #66c0f4;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-right: 10px;
+}
+
+#sort-selector {
+    background-color: #101822;
+    color: #dfe3e6;
+    border: 1px solid #2a475e;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Container for the label and search box */
+.choose-game-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.choose-game-label {
+    color: #67c1f5;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Relative wrapper to keep the dropdown aligned to the input */
+.search-container {
+    position: relative;
+    width: 200px;
+}
+
+/* The styled search input mimicking Steam's dropdown aesthetic */
+#game-search {
+    width: 100%;
+    background-color: #1b2838;
+    color: #e1e4eb;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 6px 28px 6px 10px; /* Leave room for arrow */
+    font-size: 13px;
+    box-sizing: border-box;
+    outline: none;
+    cursor: pointer;
+    box-shadow: inset 0 0 4px #000;
+    transition: border-color 0.2s;
+}
+
+#game-search:focus {
+    border-color: #67c1f5;
+}
+
+/* Custom styled arrow on the right */
+.dropdown-arrow {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #67c1f5;
+    font-size: 8px;
+    pointer-events: none; /* Let clicks pass through to input */
+}
+
+/* The floating dropdown container */
+.steam-dropdown {
+    position: absolute;
+    top: 101%;
+    left: 0;
+    right: 0;
+    background-color: #171a21;
+    border: 1px solid #67c1f5;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+}
+
+/* Individual list entries */
+.dropdown-item {
+    padding: 8px 12px;
+    color: #c6d4df;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    border-bottom: 1px solid #232c3d;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Hover state using Steam Blue */
+.dropdown-item:hover {
+    background-color: #101822;
+    color: #fff;
+}
+
+/* Customize dropdown scrollbar for matching UI design */
+.steam-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+.steam-dropdown::-webkit-scrollbar-track {
+    background: #171a21;
+}
+.steam-dropdown::-webkit-scrollbar-thumb {
+    background: #415567;
+    border-radius: 3px;
 }
