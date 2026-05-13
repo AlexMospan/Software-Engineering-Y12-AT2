@@ -69,7 +69,7 @@ nav a.active {
     --steam-text-grey: #8091a2;
 }
 
-/* This targets the container where your JS injects the HTML */
+/* This targets the container where the JS injects the HTML */
 #debug-container {
     background-color: var(--steam-dark-blue);
     padding: 20px;
@@ -155,7 +155,7 @@ nav a.active {
     font-size: 13px;
     line-height: 1.5;
     flex-grow: 1;
-    white-space: pre-wrap; /* Keeps the line breaks from your DB */
+    white-space: pre-wrap; /* Keeps the line breaks from the DB */
 }
 
 .review-footer {
@@ -377,13 +377,13 @@ nav a.active {
     border-bottom: none;
 }
 
-/* Hover state using Steam Blue */
+/* Hover state */
 .dropdown-item:hover {
     background-color: #101822;
     color: #fff;
 }
 
-/* Customize dropdown scrollbar for matching UI design */
+/* Customize dropdown scrollbar to match UI design */
 .steam-dropdown::-webkit-scrollbar {
     width: 6px;
 }
