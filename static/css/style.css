@@ -231,7 +231,7 @@ nav a.active {
     opacity: 0.6;
 }
 
-/* Update the status text to match the "Score" vibe */
+/* Update the status text */
 .status {
     color: #66c0f4;
     font-weight: 800;

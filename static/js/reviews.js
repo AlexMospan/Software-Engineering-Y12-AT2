@@ -9,9 +9,9 @@ async function loadReviews(gameId) {
 
     try {
         const response = await fetch(`/api/reviews/${gameId}`);
-        currentReviews = await response.json(); // Save reviews to our variable
+        currentReviews = await response.json(); // Save reviews to variable
 
-        renderReviews(); // Call a new function to actually draw them
+        renderReviews(); // Call a new function to draw them
     } catch (error) {
         console.error("Fetch Error:", error);
         container.innerHTML = "Error loading reviews.";
@@ -28,7 +28,7 @@ function renderReviews() {
     } else if (sortType === "lowest") {
         currentReviews.sort((a, b) => a.rating - b.rating);
     } else {
-        // Default: Newest (assuming your DB IDs or dates are sequential)
+        // Default: Newest
         currentReviews.sort((a, b) => b.id - a.id);
     }
 
@@ -108,8 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // TRACKING STATE: Keep track of currently loaded game's title
     let activeGameTitle = "Elden Ring"; 
 
-    // Initial Load: Bootstrapping with default game (Elden Ring is Game ID 1)
-    // If your IDs are different, change 1 to your Elden Ring database ID
+    // Initial Load: Bootstrapping with default game
     switchToGame(1); 
 
     // Open/search on input focus
@@ -131,13 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch(`/api/search-games?q=${encodeURIComponent(query)}`);
         const games = await response.json();
         
-        // --- ADD THIS TEMPORARY CHECK ---
         if (games.error) {
             console.error("DATABASE ORM ERROR:", games.error);
             return; // Stop execution so we don't call games.forEach()
         }
-        // --------------------------------
-        
+
         renderDropdown(games);
     } catch (error) {
         console.error("Error retrieving game data:", error);
@@ -164,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 activeGameTitle = game.title; // Update active tracker
                 hideDropdown();
                 
-                // INTEGRATION: Swap to the clicked game using your existing function!
+                // INTEGRATION: Swap to the clicked game
                 switchToGame(game.id); 
             });
 

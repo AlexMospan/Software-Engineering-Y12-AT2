@@ -48,7 +48,6 @@ def search_games():
     query = request.args.get('q', '').strip()
     
     try:
-        # NOTICE THE "db." PREFIX HERE:
         database_connection = db.get_db() 
         cursor = database_connection.cursor()
 
