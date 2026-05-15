@@ -67,4 +67,7 @@ def search_games():
         print("DATABASE ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
  
+@app.route("/login", methods=["GET", "POST"]) 
+def Login(): 
+    return render_template("login.html")
 app.run(debug=True, port=5000)
