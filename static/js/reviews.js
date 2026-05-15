@@ -5,7 +5,7 @@ async function loadReviews(gameId) {
     const container = document.getElementById('debug-container');
     if (!container) return;
 
-    container.innerHTML = "Loading...";
+    container.innerHTML = `<div style="color: white; padding: 5px;">Loading...</div>`;
 
     try {
         const response = await fetch(`/api/reviews/${gameId}`);
@@ -55,7 +55,7 @@ function renderReviews() {
                 </div>
             </div>`;
     });
-    container.innerHTML = htmlContent || "No reviews found.";
+    container.innerHTML = htmlContent || `<div style="color: white; padding: 5px;">No reviews yet</div>`;
 }
 
 async function updateHeader(gameId) {
@@ -99,7 +99,6 @@ async function switchToGame(gameId) {
     await loadReviews(gameId);
 }
 
-// --- NEW SEARCH BOX & DROPDOWN LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('game-search');
     const dropdown = document.getElementById('search-results-dropdown');
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (games.error) {
             console.error("DATABASE ORM ERROR:", games.error);
-            return; // Stop execution so we don't call games.forEach()
+            return; // Stop execution
         }
 
         renderDropdown(games);
