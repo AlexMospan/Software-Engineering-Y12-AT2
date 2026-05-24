@@ -1,0 +1,46 @@
+{% extends "base.html" %} 
+
+{% block content %} 
+<div class="login-wrapper">
+    <div class="login-box review-box">
+        <h2>WRITE A REVIEW</h2> 
+        <p class="login-subtitle">Search for a game to share your thoughts</p>
+        
+        <form action="/add" method="post" id="review-form"> 
+            <input type="hidden" name="game_id" id="selected-game-id" required>
+
+            <div class="input-group">
+                <label>GAME TITLE</label>
+                <div class="search-container" style="position: relative; z-index: 10;"> 
+                    <input type="text" id="game-search" autocomplete="off" placeholder="Search for a game..." required>
+                    <div id="search-results-dropdown" class="steam-dropdown"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="date">DATE OF REVIEW</label> 
+                <input type="date" name="date" id="date" required> 
+            </div>
+
+            <div class="input-group">
+                <label for="hours_played">HOURS PLAYED</label> 
+                <input type="number" name="hours_played" id="hours_played" min="0" step="0.1" placeholder="42.5" required> 
+            </div>
+
+            <div class="input-group">
+                <label for="rating">RATING (1-5 STARS)</label> 
+                <input type="number" name="score" id="rating" min="1" max="5" placeholder="5" required> 
+            </div>
+
+            <div class="input-group">
+                <label for="review_text">YOUR REVIEW</label>
+                <textarea name="review_text" id="review_text" rows="5" placeholder="What did you think?"></textarea>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="steam-btn">Post Review</button>
+            </div>
+        </form> 
+    </div>
+</div>
+{% endblock %}

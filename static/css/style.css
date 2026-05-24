@@ -348,49 +348,269 @@ nav a.active {
 
 /* The floating dropdown container */
 .steam-dropdown {
-    position: absolute;
-    top: 101%;
-    left: 0;
-    right: 0;
-    background-color: #171a21;
-    border: 1px solid #67c1f5;
+    position: absolute !important;
+    top: 100% !important; /* Sit flush against the input */
+    left: 0 !important;
+    right: 0 !important;
+    background-color: #171a21 !important; /* Steam dark background */
+    border: 1px solid #67c1f5 !important;
+    border-top: none !important;
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
     max-height: 220px;
     overflow-y: auto;
-    z-index: 1000;
-    display: none; /* Hidden by default */
+    /* This z-index must be higher than any other element on the page */
+    z-index: 99999 !important; 
+    display: none; 
 }
 
 /* Individual list entries */
 .dropdown-item {
-    padding: 8px 12px;
-    color: #c6d4df;
-    font-size: 13px;
-    cursor: pointer;
-    text-align: left;
-    border-bottom: 1px solid #232c3d;
-    transition: background-color 0.1s, color 0.1s;
-}
-
-.dropdown-item:last-child {
-    border-bottom: none;
+    padding: 10px 12px !important;
+    color: #ffffff !important; /* Force pure white for visibility */
+    font-size: 14px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    border-bottom: 1px solid #232c3d !important;
+    background-color: #171a21 !important;
+    display: block !important; /* Ensure it takes up space */
 }
 
 /* Hover state */
 .dropdown-item:hover {
-    background-color: #101822;
-    color: #fff;
+    background-color: #67c1f5 !important; /* Steam Blue */
+    color: #171a21 !important; /* Dark text on light blue */
 }
 
-/* Customize dropdown scrollbar to match UI design */
+/* The container must allow the dropdown to spill out */
+.search-container {
+    position: relative !important;
+    overflow: visible !important; 
+}
+
+/* Scrollbar Styling */
 .steam-dropdown::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 .steam-dropdown::-webkit-scrollbar-track {
     background: #171a21;
 }
 .steam-dropdown::-webkit-scrollbar-thumb {
     background: #415567;
+    border-radius: 4px;
+}
+
+/* -- LOGIN PAGE -- */
+
+/* Centers the entire login area on the page */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+
+/* The main dark container */
+.login-box {
+    background: #171a21; /* Dark blue-black */
+    padding: 40px;
+    width: 400px;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.login-box h2 {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+}
+
+.login-subtitle {
+    color: #8f98a0;
+    font-size: 13px;
+    margin-bottom: 30px;
+}
+
+/* Grouping labels and inputs */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    color: #afafaf;
+    font-size: 12px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* The stylized Steam input box */
+.input-group input {
+    width: 100%;
+    background-color: #32353c;
+    border: 1px solid #000;
     border-radius: 3px;
+    padding: 10px;
+    color: #e1e4eb;
+    font-size: 15px;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+    border-color: #67c1f5;
+}
+
+/* The iconic Steam Green/Blue Gradient Button */
+.steam-btn {
+    background: linear-gradient(to right, #47bfff 0%, #1a44c2 100%);
+    border: none;
+    border-radius: 2px;
+    color: #fff;
+    padding: 12px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: filter 0.2s;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.steam-btn:hover {
+    filter: brightness(1.2);
+}
+
+.button-container {
+    text-align: center;
+}
+
+/* -- REGISTER PAGE -- */
+
+/* Styling for the link at the bottom of the form */
+.login-footer {
+    margin-top: 25px;
+    text-align: center;
+    border-top: 1px solid #32353c;
+    padding-top: 15px;
+}
+
+.login-footer a {
+    color: #8f98a0;
+    font-size: 12px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.login-footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* -- POST REVIEW PAGE -- */
+
+/* Make the review box slightly wider than the login box */
+.review-box {
+    width: 500px;
+}
+
+.input-group select, 
+.input-group input[type="date"],
+.input-group textarea {
+    width: 100%;
+    background-color: #32353c;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 10px;
+    color: #e1e4eb;
+    font-size: 14px;
+    outline: none;
+}
+
+.input-group textarea {
+    font-family: inherit;
+    resize: none;
+}
+
+.input-group select:focus, 
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #67c1f5;
+}
+
+/* Allow the dropdown to spill out of the form boxes */
+.login-wrapper, .login-box, .review-box, .input-group {
+    overflow: visible !important;
+}
+
+/* Ensure the dropdown is actually on top of the date and rating inputs */
+.steam-dropdown {
+    z-index: 9999 !important;
+    background-color: #171a21 !important; /* Force Steam dark background */
+}
+
+/* -- Library Page -- */
+
+.library-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(23, 26, 33, 0.9); /* Steam Dark */
+    border-radius: 4px;
+}
+
+.library-header {
+    border-bottom: 1px solid #2a475e;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.game-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.game-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2a3f5a;
+    padding: 15px 20px;
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.game-card:hover {
+    background: #3d5a7d;
+}
+
+.game-title-text {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.1em;
+}
+
+.game-id {
+    color: #66c0f4; /* Steam Blue */
+    font-size: 0.8em;
+    font-family: monospace;
+    margin-right: 10px;
+}
+
+.view-btn {
+    background: #5c7e10; /* Steam Green */
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 2px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.view-btn:hover {
+    background: #76a013;
 }

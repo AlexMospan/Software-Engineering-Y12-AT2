@@ -4,6 +4,10 @@
 
 <div class="container"> 
     <p style="color: white;">Welcome to The Game Review Database </p> 
+    {% if session['username'] %} 
+        <br> 
+        <p style="color: white;">Hello {{ session['username'] }}</p> 
+    {% endif %} 
 </div> 
 
 <div id="game-header-container">

@@ -21,8 +21,13 @@
     <!-- Include a navigation menu --> 
     <nav> 
         <a href="/">Home</a> 
-        <a href="/login">Login</a> 
-        <a href="/register">Register</a> 
+        {% if not session['username'] %} 
+            <a href="/login">Login</a> 
+            <a href="/register">Register</a> 
+        {% else %} 
+            <a href="/logout">Logout</a> 
+            <a href="postreview">Post a review</a>
+        {% endif %} 
         <a href="/gamelist">List of games</a>
     </nav> 
  
@@ -34,7 +39,7 @@
     </main> 
  
     <!-- This script will be for the service worker --> 
-    <script src="static/js/app.js"></script> 
+    <script src="{{ url_for('static', filename='js/reviews.js') }}"></script> 
  
 </body> 
 </html>

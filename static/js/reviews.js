@@ -2,16 +2,15 @@
 let currentReviews = []; 
 
 async function loadReviews(gameId) {
+    if (!document.getElementById('debug-container')) return;
+    
     const container = document.getElementById('debug-container');
-    if (!container) return;
-
     container.innerHTML = `<div style="color: white; padding: 5px;">Loading...</div>`;
 
     try {
         const response = await fetch(`/api/reviews/${gameId}`);
-        currentReviews = await response.json(); // Save reviews to variable
-
-        renderReviews(); // Call a new function to draw them
+        currentReviews = await response.json(); 
+        renderReviews(); 
     } catch (error) {
         console.error("Fetch Error:", error);
         container.innerHTML = "Error loading reviews.";
@@ -20,15 +19,17 @@ async function loadReviews(gameId) {
 
 function renderReviews() {
     const container = document.getElementById('debug-container');
-    const sortType = document.getElementById('sort-selector').value;
+    const sortSelector = document.getElementById('sort-selector');
+    
+    if (!container || !sortSelector) return;
 
-    // Sort the currentReviews array
+    const sortType = sortSelector.value;
+
     if (sortType === "highest") {
         currentReviews.sort((a, b) => b.rating - a.rating);
     } else if (sortType === "lowest") {
         currentReviews.sort((a, b) => a.rating - b.rating);
     } else {
-        // Default: Newest
         currentReviews.sort((a, b) => b.id - a.id);
     }
 
@@ -59,6 +60,8 @@ function renderReviews() {
 }
 
 async function updateHeader(gameId) {
+    if (!document.getElementById('game-title')) return;
+
     try {
         const response = await fetch(`/api/game_info/${gameId}`);
         const data = await response.json();
@@ -68,34 +71,33 @@ async function updateHeader(gameId) {
         const ratingElem = document.getElementById('overall-rating');
 
         if (titleElem && data.title) titleElem.innerText = data.title;
+        
+        if (document.getElementById('game-search') && data.title) {
+            document.getElementById('game-search').value = data.title;
+        }
+        // --------------------------
+
         if (countElem && data.count !== undefined) {
             countElem.innerText = `${data.count} Reviews`;
-            countElem.style.color = "#66c0f4"; // Steam Blue
+            countElem.style.color = "#66c0f4";
         }
         
-        // Update the Rating text
         if (ratingElem) {
             if (data.average > 0) {
                 ratingElem.innerText = `| Average Rating: ${data.average} / 5`;
-                ratingElem.style.color = "#66c0f4"; // Steam Blue
+                ratingElem.style.color = "#66c0f4";
             } else {
                 ratingElem.innerText = "| No Ratings Yet";
-                ratingElem.style.color = "#8091a2"; // Faded Grey
+                ratingElem.style.color = "#8091a2";
             }
         }
-
     } catch (error) {
         console.error("Error updating header:", error);
     }
 }
 
 async function switchToGame(gameId) {
-    console.log("Attempting to switch to Game ID:", gameId);
-    
-    // 1. Update the Header (Title/Count)
     await updateHeader(gameId);
-    
-    // 2. Load the actual Review Cards
     await loadReviews(gameId);
 }
 
@@ -103,47 +105,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('game-search');
     const dropdown = document.getElementById('search-results-dropdown');
     const sortSelector = document.getElementById('sort-selector');
+    const hiddenIdField = document.getElementById('selected-game-id');
 
-    // TRACKING STATE: Keep track of currently loaded game's title
-    let activeGameTitle = "Elden Ring"; 
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameIdFromUrl = urlParams.get('game_id');
 
-    // Initial Load: Bootstrapping with default game
-    switchToGame(1); 
+    // TRACKING STATE
+    let activeGameTitle = "Select a Game"; 
 
-    // Open/search on input focus
-    searchInput.addEventListener('focus', () => {
-        if (searchInput.value === activeGameTitle) {
-            searchInput.value = "";
+    if (!hiddenIdField) {
+        if (gameIdFromUrl) {
+            // If the URL has an ID, load that game
+            switchToGame(gameIdFromUrl);
+        } else {
+            // No ID in URL, load the default Elden Ring
+            activeGameTitle = "Elden Ring"; 
+            switchToGame(1); 
         }
-        fetchSearchResults(searchInput.value);
-    });
-
-    // Detect typing
-    searchInput.addEventListener('input', () => {
-        fetchSearchResults(searchInput.value);
-    });
-
-    // Fetch matching data from Python backend API
-    async function fetchSearchResults(query) {
-    try {
-        const response = await fetch(`/api/search-games?q=${encodeURIComponent(query)}`);
-        const games = await response.json();
-        
-        if (games.error) {
-            console.error("DATABASE ORM ERROR:", games.error);
-            return; // Stop execution
-        }
-
-        renderDropdown(games);
-    } catch (error) {
-        console.error("Error retrieving game data:", error);
+    } else {
+        if (searchInput) searchInput.value = "";
     }
-}
 
-    // Populate dropdown HTML dynamically
+    if (searchInput) {
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value === activeGameTitle) {
+                searchInput.value = "";
+            }
+            fetchSearchResults(searchInput.value);
+        });
+
+        searchInput.addEventListener('input', () => {
+            fetchSearchResults(searchInput.value);
+        });
+    }
+
+    async function fetchSearchResults(query) {
+        try {
+            const response = await fetch(`/api/search-games?q=${encodeURIComponent(query)}`);
+            const games = await response.json();
+            renderDropdown(games);
+        } catch (error) {
+            console.error("Error retrieving game data:", error);
+        }
+    }
+
     function renderDropdown(games) {
-        dropdown.innerHTML = ""; // Reset dropdown container
-
+        dropdown.innerHTML = ""; 
         if (games.length === 0) {
             hideDropdown();
             return;
@@ -154,20 +161,23 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = "dropdown-item";
             item.textContent = game.title;
 
-            // Trigger action when user clicks a dropdown item
             item.addEventListener("click", () => {
                 searchInput.value = game.title;
-                activeGameTitle = game.title; // Update active tracker
                 hideDropdown();
                 
-                // INTEGRATION: Swap to the clicked game
-                switchToGame(game.id); 
+                // If this field exists, we are on the POST REVIEW page
+                if (hiddenIdField) {
+                    hiddenIdField.value = game.id;
+                    searchInput.style.border = "1px solid #66c0f4"; 
+                } else {
+                    activeGameTitle = game.title; 
+                    switchToGame(game.id); 
+                }
             });
-
             dropdown.appendChild(item);
         });
-
-        dropdown.style.display = "block";
+        // Use !important to override the CSS display
+        dropdown.style.setProperty('display', 'block', 'important');
     }
 
     function hideDropdown() {
@@ -175,21 +185,18 @@ document.addEventListener('DOMContentLoaded', () => {
         dropdown.innerHTML = "";
     }
 
-    // Close the dropdown list if clicking anywhere else
     document.addEventListener("click", (event) => {
-        if (!event.target.closest(".search-container")) {
-            // Restore input text to current active game if left blank
-            if (searchInput.value.trim() === "") {
+        if (searchInput && !event.target.closest(".search-container")) {
+            if (searchInput.value.trim() === "" && !hiddenIdField) {
                 searchInput.value = activeGameTitle;
             }
             hideDropdown();
         }
     });
 
-    // Listen for sort changes (remains unchanged)
     if (sortSelector) {
         sortSelector.addEventListener('change', () => {
-            renderReviews(); // Re-draw with the new sort
+            renderReviews(); 
         });
     }
 });

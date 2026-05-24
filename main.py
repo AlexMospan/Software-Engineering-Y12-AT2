@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect
 import sqlite3
 import db
 import traceback
@@ -13,8 +13,6 @@ def Home():
 
 @app.route('/api/reviews/<int:game_id>')
 def api_get_reviews(game_id):
-    # Use the name of the file followed by the function name
-    # Example: db.your_function_name()
     data = db.get_reviews_from_db(game_id) 
     
     return jsonify(data)
@@ -69,5 +67,76 @@ def search_games():
  
 @app.route("/login", methods=["GET", "POST"]) 
 def Login(): 
+    if request.method == "POST": 
+        username = request.form['username'] 
+        password = request.form['password'] 
+
+        user = db.CheckLogin(username, password) 
+        if user: 
+
+            session['id'] = user['id'] 
+            session['username'] = user['username'] 
+ 
+            return redirect("/")
     return render_template("login.html")
+
+@app.route("/register", methods=["GET", "POST"]) 
+def Register(): 
+
+    if request.method == "POST": 
+        username = request.form['username'] 
+        password = request.form['password'] 
+ 
+        if db.RegisterUser(username, password): 
+            return redirect("/") 
+         
+    return render_template("register.html")
+
+@app.route("/logout") 
+def Logout(): 
+    session.clear() 
+    return redirect("/")
+
+@app.route('/postreview')
+def add_review_page():
+    return render_template('postreview.html')
+
+@app.route("/add", methods=["POST"])
+def add_review():
+    game_id = request.form.get('game_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('score')
+    date_posted = request.form.get('date')
+    
+    # 1. CAPTURE THE NEW HOURS FIELD
+    hours_played = request.form.get('hours_played')
+    
+    user_id = session.get('id')
+
+    if not user_id:
+        return redirect("/login")
+
+    try:
+        conn = db.get_db()
+        # 2. UPDATE SQL TO INCLUDE total_hours_played
+        conn.execute('''
+            INSERT INTO reviews (game_id, user_id, review_text, rating, date, total_hours_played)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (game_id, user_id, review_text, rating, date_posted, hours_played))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print("DATABASE ERROR:", e)
+        return "Error saving review", 500
+
+    return redirect(f"/?game_id={game_id}")
+
+@app.route('/gamelist')
+def gamelist():
+    conn = db.get_db()
+    # Fetch all games sorted alphabetically
+    games = conn.execute('SELECT * FROM games ORDER BY title ASC').fetchall()
+    conn.close()
+    return render_template('gamelist.html', games=games)
+
 app.run(debug=True, port=5000)
