@@ -103,18 +103,16 @@ def add_review_page():
 
 @app.route("/add", methods=["POST"])
 def add_review():
-    game_id = request.form.get('game_id')
-    review_text = request.form.get('review_text')
-    rating = request.form.get('score')
-    date_posted = request.form.get('date')
-    
-    # 1. CAPTURE THE NEW HOURS FIELD
-    hours_played = request.form.get('hours_played')
-    
     user_id = session.get('id')
 
     if not user_id:
         return redirect("/login")
+
+    game_id = request.form.get('game_id')
+    review_text = request.form.get('review_text')
+    rating = request.form.get('score')
+    date_posted = request.form.get('date')
+    hours_played = request.form.get('hours_played')
 
     try:
         conn = db.get_db()
