@@ -23,7 +23,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect('.database/GameReviews.db')
-        db.row_factory = sqlite3.Row  # This lets us access columns by name (like row['title'])
+        db.row_factory = sqlite3.Row  # Access columns by name
     return db
 
 def CheckLogin(username, password): 

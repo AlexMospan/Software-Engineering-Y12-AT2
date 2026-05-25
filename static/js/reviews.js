@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             dropdown.appendChild(item);
         });
-        // Use !important to override the CSS display
+        // Using !important to override the CSS display
         dropdown.style.setProperty('display', 'block', 'important');
     }
 

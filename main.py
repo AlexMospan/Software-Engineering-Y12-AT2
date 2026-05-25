@@ -67,6 +67,10 @@ def search_games():
  
 @app.route("/login", methods=["GET", "POST"]) 
 def Login(): 
+    user_id = session.get('id')
+
+    if user_id:
+        return redirect("/")
     if request.method == "POST": 
         username = request.form['username'] 
         password = request.form['password'] 
@@ -82,7 +86,10 @@ def Login():
 
 @app.route("/register", methods=["GET", "POST"]) 
 def Register(): 
+    user_id = session.get('id')
 
+    if user_id:
+        return redirect("/")
     if request.method == "POST": 
         username = request.form['username'] 
         password = request.form['password'] 
@@ -116,7 +123,6 @@ def add_review():
 
     try:
         conn = db.get_db()
-        # 2. UPDATE SQL TO INCLUDE total_hours_played
         conn.execute('''
             INSERT INTO reviews (game_id, user_id, review_text, rating, date, total_hours_played)
             VALUES (?, ?, ?, ?, ?, ?)
