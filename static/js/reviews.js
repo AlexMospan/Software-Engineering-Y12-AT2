@@ -1,4 +1,3 @@
-// Keep track of the active reviews globally
 let currentReviews = []; 
 
 async function loadReviews(gameId) {

@@ -1,12 +1,11 @@
-from flask import Flask, render_template, request, jsonify, session, redirect
+from flask import Flask, render_template, request, jsonify, session, redirect, send_from_directory
 import sqlite3
 import db
 import traceback
- 
-app = Flask(__name__) 
 
+app = Flask(__name__) 
 app.secret_key = "tgr" 
- 
+
 @app.route("/") 
 def Home(): 
     return render_template("index.html")
@@ -16,7 +15,7 @@ def api_get_reviews(game_id):
     data = db.get_reviews_from_db(game_id) 
     
     return jsonify(data)
- 
+
 @app.route('/api/game_info/<int:game_id>')
 def get_game_info(game_id):
     conn = sqlite3.connect('.database/GameReviews.db')
@@ -64,7 +63,7 @@ def search_games():
     except Exception as e:
         print("DATABASE ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
- 
+
 @app.route("/login", methods=["GET", "POST"]) 
 def Login(): 
     user_id = session.get('id')
@@ -80,7 +79,7 @@ def Login():
 
             session['id'] = user['id'] 
             session['username'] = user['username'] 
- 
+            
             return redirect("/")
     return render_template("login.html")
 
@@ -93,10 +92,10 @@ def Register():
     if request.method == "POST": 
         username = request.form['username'] 
         password = request.form['password'] 
- 
+
         if db.RegisterUser(username, password): 
             return redirect("/") 
-         
+
     return render_template("register.html")
 
 @app.route("/logout") 
@@ -142,5 +141,15 @@ def gamelist():
     games = conn.execute('SELECT * FROM games ORDER BY title ASC').fetchall()
     conn.close()
     return render_template('gamelist.html', games=games)
+
+@app.route('/manifest.json')
+def serve_manifest():
+    return send_from_directory('static/js', 'manifest.json')
+
+@app.route('/serviceworker.js')
+def serve_sw():
+    response = app.make_response(send_from_directory('static/js', 'serviceworker.js'))
+    response.headers['Content-Type'] = 'application/javascript'
+    return response
 
 app.run(debug=True, port=5000)
