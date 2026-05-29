@@ -18,7 +18,7 @@ def api_get_reviews(game_id):
 
 @app.route('/api/game_info/<int:game_id>')
 def get_game_info(game_id):
-    conn = sqlite3.connect('.database/GameReviews.db')
+    conn = db.get_db()
     cursor = conn.cursor()
     
     # Get Game Title
