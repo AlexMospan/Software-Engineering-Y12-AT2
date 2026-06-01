@@ -18,7 +18,7 @@
  
     <h1 class="banner">THE Game Review Database</h1> 
  
-    <!-- Include a navigation menu --> 
+    <!-- Navigation menu --> 
     <nav> 
         <a href="/">Home</a> 
         {% if not session['username'] %} 
@@ -31,14 +31,14 @@
         <a href="/gamelist">List of games</a>
     </nav> 
  
-    <!-- This section will contain the page content --> 
+    <!-- Page content --> 
     <main> 
         {% block content %} 
  
         {% endblock %} 
     </main> 
  
-    <!-- This script will be for the service worker --> 
+    <!-- Service worker --> 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     <script src="{{ url_for('static', filename='js/reviews.js') }}"></script> 
     <script>

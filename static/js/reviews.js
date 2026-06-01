@@ -74,7 +74,6 @@ async function updateHeader(gameId) {
         if (document.getElementById('game-search') && data.title) {
             document.getElementById('game-search').value = data.title;
         }
-        // --------------------------
 
         if (countElem && data.count !== undefined) {
             countElem.innerText = `${data.count} Reviews`;
@@ -164,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.value = game.title;
                 hideDropdown();
                 
-                // If this field exists, we are on the POST REVIEW page
                 if (hiddenIdField) {
                     hiddenIdField.value = game.id;
                     searchInput.style.border = "1px solid #66c0f4"; 
